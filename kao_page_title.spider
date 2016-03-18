@@ -1,0 +1,17 @@
+use angular;
+    
+angular.module('kao.page-title', [])
+    .service('PageTitle', fn($window, $interpolate) {
+        var getTitle = fn(template, scope) {
+            var title = template;
+            if scope? {
+                title = $interpolate(template)(scope);
+            }
+            return title;
+        };
+    
+        this.set = fn(template, scope) {
+            var title = getTitle(template, scope);
+            $window.document.title = title;
+        };
+    });
