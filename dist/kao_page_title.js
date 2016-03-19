@@ -12,6 +12,21 @@ $traceurRuntime.ModuleStore.getAnonymousModule(function() {
       var title = getTitle(template, scope);
       $window.document.title = title;
     };
+  }).provider("FormattedPageTitle", function() {
+    var format = void 0;
+    this.setFormat = function(templateFormat) {
+      format = templateFormat;
+    };
+    this.$get = function($interpolate, PageTitle) {
+      var FormattedPageTitle = function() {};
+      FormattedPageTitle.prototype.format = function(scope) {
+        return $interpolate(format)(scope);
+      };
+      FormattedPageTitle.prototype.set = function(scope) {
+        return PageTitle.set(format, scope);
+      };
+      return new FormattedPageTitle();
+    };
   });
   return {};
 });

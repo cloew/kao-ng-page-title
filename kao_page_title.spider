@@ -14,4 +14,21 @@ angular.module('kao.page-title', [])
             var title = getTitle(template, scope);
             $window.document.title = title;
         };
+    })
+    .provider('FormattedPageTitle', fn() {
+        var format = undefined;
+        this.setFormat = fn(templateFormat) {
+            format = templateFormat;
+        };
+        
+        this.$get = fn($interpolate, PageTitle) {
+            var FormattedPageTitle = fn() {};
+            FormattedPageTitle.prototype.format = fn(scope) {
+                return $interpolate(format)(scope);
+            };
+            FormattedPageTitle.prototype.set = fn(scope) {
+                return PageTitle.set(format, scope);
+            };
+            return new FormattedPageTitle();
+        };
     });
