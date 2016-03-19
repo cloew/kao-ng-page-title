@@ -14,11 +14,16 @@ $traceurRuntime.ModuleStore.getAnonymousModule(function() {
     };
   }).provider("FormattedPageTitle", function() {
     var format = void 0;
+    var isSetup = false;
     this.setFormat = function(templateFormat) {
       format = templateFormat;
+      isSetup = true;
     };
     this.$get = function($interpolate, PageTitle) {
       var FormattedPageTitle = function() {};
+      FormattedPageTitle.prototype.isSetup = function() {
+        return isSetup;
+      };
       FormattedPageTitle.prototype.format = function(scope) {
         return $interpolate(format)(scope);
       };

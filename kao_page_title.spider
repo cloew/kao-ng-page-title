@@ -17,12 +17,17 @@ angular.module('kao.page-title', [])
     })
     .provider('FormattedPageTitle', fn() {
         var format = undefined;
+        var isSetup = false;
         this.setFormat = fn(templateFormat) {
             format = templateFormat;
+            isSetup = true;
         };
         
         this.$get = fn($interpolate, PageTitle) {
             var FormattedPageTitle = fn() {};
+            FormattedPageTitle.prototype.isSetup = fn() {
+                return isSetup;
+            };
             FormattedPageTitle.prototype.format = fn(scope) {
                 return $interpolate(format)(scope);
             };
